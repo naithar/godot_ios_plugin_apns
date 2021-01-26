@@ -17,6 +17,8 @@
 //    [GodotApplicalitionDelegate addService:[APNSAppDeletegate new]];
 //}
 
+GODOT_ENABLE_PUSH_NOTIFICATIONS
+
 struct APNSInitializer {
     
     APNSInitializer() {
