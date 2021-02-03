@@ -1,5 +1,7 @@
 # Godot iOS APNS Plugin template
 
+**Requires Godot iOS APN Plugin**
+
 This repo contains an example Godot plugin working with Apple Push Notification.
 It is not production ready and works only as an example. Initially created for testing `GodotAppDelegate` extension possibilities.
 

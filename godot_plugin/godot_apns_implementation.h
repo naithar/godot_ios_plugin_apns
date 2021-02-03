@@ -12,7 +12,6 @@
 @interface APNSAppDelegate : NSObject <UIApplicationDelegate>
 
 + (instancetype)shared;
-- (void)registerPushNotifications;
 
 @end
 

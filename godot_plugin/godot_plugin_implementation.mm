@@ -21,17 +21,7 @@ PluginExample *PluginExample::get_singleton() {
 }
 
 void PluginExample::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("register_push_notifications"), &PluginExample::register_push_notifications);
     
-    ADD_SIGNAL(MethodInfo("device_address_changed", PropertyInfo(Variant::STRING, "id")));
-}
-
-void PluginExample::register_push_notifications() {
-    [[APNSAppDelegate shared] registerPushNotifications];
-}
-
-void PluginExample::update_device_token(String token) {
-    emit_signal("device_address_changed", token);
 }
 
 PluginExample::PluginExample() {

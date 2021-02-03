@@ -11,14 +11,6 @@
 #import "godot_plugin_implementation.h"
 #import "platform/iphone/godot_app_delegate.h"
 
-
-//__attribute__((constructor))
-//void apns_initialize() {
-//    [GodotApplicalitionDelegate addService:[APNSAppDeletegate new]];
-//}
-
-GODOT_ENABLE_PUSH_NOTIFICATIONS
-
 struct APNSInitializer {
     
     APNSInitializer() {
@@ -40,6 +32,7 @@ static APNSInitializer initializer;
     
     if (self) {
         _unDelegate = [APNSUserNotificationDelegate new];
+        UNUserNotificationCenter.currentNotificationCenter.delegate = _unDelegate;
     }
     
     return self;
@@ -54,26 +47,8 @@ static APNSInitializer initializer;
     return sharedInstance;
 }
 
-- (void)registerPushNotifications {
-    [UIApplication.sharedApplication registerForRemoteNotifications];
-    [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        NSLog(@"access: %@, error: %@", @(granted), error);
-    }];
-    UNUserNotificationCenter.currentNotificationCenter.delegate = self.unDelegate;
-}
-
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    const char *data = (const char *)[deviceToken bytes];
-    NSMutableString *token = [NSMutableString string];
-
-    for (NSUInteger i = 0; i < [deviceToken length]; i++) {
-        [token appendFormat:@"%02.2hhX", data[i]];
-    }
-    
-    String device_token;
-    device_token.parse_utf8([[token copy] UTF8String]);
-    
-    PluginExample::get_singleton()->update_device_token(device_token);
+    NSLog(@"registered device token");
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -90,6 +65,7 @@ static APNSInitializer initializer;
 @implementation APNSUserNotificationDelegate
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    NSLog(@"trying to present notification");
     if (@available(iOS 14.0, *)) {
         completionHandler(UNNotificationPresentationOptionBanner | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionBadge);
     } else {

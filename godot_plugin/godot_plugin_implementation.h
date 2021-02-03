@@ -19,9 +19,6 @@ class PluginExample : public Object {
 public:
     static PluginExample *get_singleton();
     
-    void register_push_notifications();
-    void update_device_token(String token);
-    
     PluginExample();
     ~PluginExample();
 };
