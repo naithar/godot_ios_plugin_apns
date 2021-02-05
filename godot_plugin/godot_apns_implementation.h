@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <UserNotifications/UserNotifications.h>
 
+#import "godot_apn/godot_user_notification_delegate.h"
+
 @interface APNSAppDelegate : NSObject <UIApplicationDelegate>
 
 + (instancetype)shared;
 
 @end
 
-@interface APNSUserNotificationDelegate : NSObject <UNUserNotificationCenterDelegate>
+@interface APNSUserNotificationDelegate : UserNotificationService
 
 @end

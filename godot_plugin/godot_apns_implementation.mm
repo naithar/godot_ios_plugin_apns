@@ -14,8 +14,10 @@
 struct APNSInitializer {
     
     APNSInitializer() {
-        NSLog(@"registering new app delegate");
+        NSLog(@"registering new app delegate extension");
         [GodotApplicalitionDelegate addService:[APNSAppDelegate shared]];
+        NSLog(@"registering user notification delegate extension");
+        [GodotUserNotificationDelegate addService:[APNSUserNotificationDelegate new]];
     }
 };
 static APNSInitializer initializer;
@@ -26,17 +28,6 @@ static APNSInitializer initializer;
 @end
 
 @implementation APNSAppDelegate
-
-- (instancetype)init {
-    self = [super init];
-    
-    if (self) {
-        _unDelegate = [APNSUserNotificationDelegate new];
-        UNUserNotificationCenter.currentNotificationCenter.delegate = _unDelegate;
-    }
-    
-    return self;
-}
 
 + (instancetype)shared {
     static APNSAppDelegate *sharedInstance = nil;
